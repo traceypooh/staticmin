@@ -1,5 +1,4 @@
-import convict from 'npm:convict'
-import path from 'npm:path'
+import convict from 'https://esm.sh/convict@^4.3.0'
 
 const schema = {
   env: {

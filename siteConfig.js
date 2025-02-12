@@ -1,4 +1,4 @@
-import convict from 'npm:convict'
+import convict from 'https://esm.sh/convict@^4.3.0'
 
 const schema = {
   allowedFields: {
