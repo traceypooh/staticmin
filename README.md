@@ -4,6 +4,16 @@
 
 > Static sites with superpowers
 
+## 2025 Update
+Helpful links:
+- https://github.com/bashlk/staticman-netlify-function/blob/master/functions/staticman/staticman.js
+- https://www.netlify.com/blog/add-personalization-to-static-html-with-edge-functions-no-browser-javascript/
+
+current running state:
+```sh
+NODE_ENV=production  deno eval 'import S from "./lib/Staticman.js"; new S({branch:"main",repository:"blogtini",username:"traceypooh",version:3})'
+```
+
 ## Introduction
 
 Staticman is a Node.js application that receives user-generated content and uploads it as data files to a GitHub and/or GitLab repository. In practice, this allows you to have dynamic content (e.g. blog post comments) as part of a fully static website, as long as your site automatically deploys on every push to GitHub and/or GitLab, as seen on [GitHub Pages](https://pages.github.com/), [GitLab Pages](https://about.gitlab.com/product/pages/), [Netlify](http://netlify.com/) and others.
