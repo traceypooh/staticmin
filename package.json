@@ -1,21 +1,5 @@
 {
-  "name": "staticman",
-  "version": "3.0.0",
-  "description": "Static sites with superpowers",
-  "main": "index.js",
   "type": "module",
-  "scripts": {
-    "prestart": "if [ ! -d node_modules ]; then npm install; fi",
-    "start": "node index.js",
-    "debug": "nodemon --inspect index.js"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/eduardoboucas/staticman.git"
-  },
-  "author": "Eduardo Boucas <mail@eduardoboucas.com> (https://eduardoboucas.com/)",
-  "license": "ISC",
-  "homepage": "https://github.com/eduardoboucas/staticman#readme",
   "dependencies": {
     "@octokit/app": "^4.1.0",
     "@octokit/request": "^5.3.1",
@@ -30,7 +14,6 @@
     "md5": "^2.1.0",
     "moment": "^2.18.1",
     "node-rsa": "^0.4.2",
-    "nodemon": "^1.19.4",
     "object-path": "^0.11.1",
     "request-promise": "^4.2.2",
     "sha1": "^1.1.1",
