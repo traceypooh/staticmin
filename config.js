@@ -1,18 +1,6 @@
 import convict from 'https://esm.sh/convict@^4.3.0'
 
 const schema = {
-  env: {
-    doc: 'The applicaton environment.',
-    format: ['production', 'development', 'test'],
-    default: 'development',
-    env: 'NODE_ENV'
-  },
-  githubAccessTokenUri: {
-    doc: 'URI for the GitHub authentication provider.',
-    format: String,
-    default: 'https://github.com/login/oauth/access_token',
-    env: 'GITHUB_ACCESS_TOKEN_URI'
-  },
   githubAppID: {
     doc: 'ID of the GitHub App.',
     format: String,
@@ -50,10 +38,9 @@ let config
 
 try {
   config = convict(schema)
-
-  const fileName = 'config.' + config.get('env') + '.json'
-
-  config.loadFile(fileName)
+  const cj = JSON.parse(Deno.readTextFileSync('config.json'))
+  config.load(cj)
+  // console.log({ config })
   config.validate()
 
   console.log('(*) Local config file loaded')
@@ -61,5 +48,4 @@ try {
   console.error({ e }) // xxx
 }
 
-export { schema }
 export default config
