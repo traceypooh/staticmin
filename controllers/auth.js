@@ -12,15 +12,6 @@ module.exports = async (req, res) => {
   let requestAccessToken
 
   switch (req.params.service) {
-    case 'gitlab':
-      requestAccessToken = siteConfig =>
-        oauth.requestGitLabAccessToken(
-          req.query.code,
-          siteConfig.get('gitlabAuth.clientId'),
-          siteConfig.get('gitlabAuth.clientSecret'),
-          siteConfig.get('gitlabAuth.redirectUri')
-        )
-      break
     default:
       requestAccessToken = siteConfig =>
         oauth.requestGitHubAccessToken(

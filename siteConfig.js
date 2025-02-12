@@ -1,6 +1,4 @@
-'use strict'
-
-const convict = require('convict')
+import convict from 'npm:convict'
 
 const schema = {
   allowedFields: {
@@ -14,38 +12,6 @@ const schema = {
     docExample: 'allowedOrigins: ["localhost", "eduardoboucas.com"]',
     default: [],
     format: Array
-  },
-  akismet: {
-    enabled: {
-      doc: 'Whether to use Akismet to check entries for spam. This requires an Akismet account to be configured in the Staticman API instance being used.',
-      format: Boolean,
-      default: false
-    },
-    author: {
-      doc: 'Name of the field to be used as the entry\'s author in Akistmet',
-      format: String,
-      default: ''
-    },
-    authorEmail: {
-      doc: 'Name of the field to be used as the entry\'s author\'s email in Akistmet',
-      format: String,
-      default: ''
-    },
-    authorUrl: {
-      doc: 'Name of the field to be used as the entry\'s author\'s URL in Akistmet',
-      format: String,
-      default: ''
-    },
-    content: {
-      doc: 'Name of the field to be used as the entry\'s body in Akistmet',
-      format: String,
-      default: ''
-    },
-    type: {
-      doc: 'Type of entry to be sent to Akismet',
-      format: String,
-      default: 'comment'
-    }
   },
   auth: {
     required: {
@@ -107,23 +73,6 @@ const schema = {
       default: false
     }
   },
-  gitlabAuth: {
-    clientId: {
-      doc: 'The client ID to the GitLab Application used for GitLab OAuth.',
-      format: 'EncryptedString',
-      default: null
-    },
-    clientSecret: {
-      doc: 'The client secret to the GitLab Application used for GitLab OAuth.',
-      format: 'EncryptedString',
-      default: null
-    },
-    redirectUri: {
-      doc: 'The URL to redirect to after authenticating with GitLab.',
-      format: String,
-      default: ''
-    }
-  },
   moderation: {
     doc: 'When set to `true`, a pull request with the data files will be created to allow site administrators to approve or reject an entry. Otherwise, entries will be pushed to `branch` immediately.',
     format: Boolean,
@@ -134,23 +83,6 @@ const schema = {
     docExample: 'name: "My awesome blog"',
     format: String,
     default: ''
-  },
-  notifications: {
-    enabled: {
-      doc: 'Whether email notifications are enabled. This allows users to subscribe to future comments on a thread. A [Mailgun](http://mailgun.com) account is required.',
-      format: Boolean,
-      default: false
-    },
-    apiKey: {
-      doc: 'Mailgun API key',
-      format: 'EncryptedString',
-      default: null
-    },
-    domain: {
-      doc: 'Mailgun domain',
-      format: 'EncryptedString',
-      default: null
-    }
   },
   path: {
     doc: 'Path to the directory where entry files are stored. You can use placeholders (denoted by curly braces), which will be dynamically replaced with the content of a field (e.g. `{fields.name}`), the content of an option (e.g. `{options.slug}`) or other dynamic placeholders such as the entry\'s unique id (`{@id}`).',
@@ -173,26 +105,10 @@ const schema = {
     format: Object,
     default: {}
   },
-  reCaptcha: {
-    enabled: {
-      doc: 'Set to `true` to force reCAPTCHA validation, set to `false` to accept comments without reCAPTCHA.',
-      format: Boolean,
-      default: false
-    },
-    siteKey: {
-      doc: 'Site Key for your reCAPTCHA site registration',
-      format: String,
-      default: ''
-    },
-    secret: {
-      doc: 'Encrypted Secret for your reCAPTCHA site registration',
-      format: 'EncryptedString',
-      default: ''
-    }
-  }
 }
 
-module.exports = (data, rsa) => {
+export { schema }
+export default function(data, rsa) {
   convict.addFormat({
     name: 'EncryptedString',
     validate: val => true,
@@ -212,5 +128,3 @@ module.exports = (data, rsa) => {
     throw e
   }
 }
-
-module.exports.schema = schema
