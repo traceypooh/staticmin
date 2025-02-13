@@ -1,5 +1,8 @@
 import convict from 'https://esm.sh/convict@^4.3.0'
 
+// eslint-disable-next-line no-console
+const log = console.log.bind(console)
+
 const schema = {
   githubAppID: {
     doc: 'ID of the GitHub App.',
@@ -47,8 +50,9 @@ export default () => {
     // console.log({ config })
     config.validate()
 
-    console.log('(*) Local config file loaded')
+    log('(*) Local config file loaded')
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error({ e })
   }
 

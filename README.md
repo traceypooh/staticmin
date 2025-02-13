@@ -18,6 +18,10 @@ Option 1. Authenticate as a GitHub application
 - tie this forked repo into `netlify`
 - setup a GitHub Application with access to the other GitHub repo with your static site blog
 - copy the GitHub setup info (App ID (number) and GitHub RSA private key) into the forked 'staticmin' repo's `netlify` setup as `netlify` secrets
+- you should have these 3 secrets as environment variables configured in your https://app.netlify.com setup:
+  - `GITHUB_APP_ID`
+  - `GITHUB_PRIVATE_KEY`
+  - `RSA_PRIVATE_KEY`
 
 ## RSA tokens (2)
 To avoid encoding / secret / transport / environment variable issues, simply substitute any [NEWLINE] character in your private key files to [SPACE] characters, and the updated [lib/Staticman.js](lib/Staticman.js) code will massage it properly.

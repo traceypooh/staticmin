@@ -1,5 +1,8 @@
 import convict from 'https://esm.sh/convict@^4.3.0'
 
+// eslint-disable-next-line no-console
+const log = console.log.bind(console)
+
 const schema = {
   allowedFields: {
     doc: 'An array with the names of the allowed fields. If any of the fields sent is not part of this list, the entry will be discarded and an error will be thrown.',
@@ -13,17 +16,10 @@ const schema = {
     default: [],
     format: Array
   },
-  auth: {
-    required: {
-      doc: 'Whether authentication is required for an entry to be accepted.',
-      format: Boolean,
-      default: false
-    }
-  },
   branch: {
     doc: 'Name of the branch being used within the GitHub repository.',
     format: String,
-    default: 'master'
+    default: 'main'
   },
   commitMessage: {
     doc: 'Text to be used as the commit message when pushing entries to the GitHub repository.',
@@ -41,8 +37,8 @@ const schema = {
     default: ''
   },
   format: {
-    doc: 'Format of the data files being uploaded to the repository.',
-    format: ['yaml', 'yml', 'json', 'frontmatter'],
+    doc: "Format of the data files being uploaded to the repository.  One of: ['yaml', 'yml', 'json', 'frontmatter']",
+    format: String,
     default: 'yml'
   },
   generatedFields: {
@@ -86,16 +82,16 @@ const schema = {
 }
 
 export { schema }
-export default function(data, rsa) {
+export default function load_config(data, rsa) {
   convict.addFormat({
     name: 'EncryptedString',
-    validate: val => true,
-    coerce: val => rsa.decrypt(val, 'utf8'),
+    validate: () => true,
+    coerce: (val) => rsa.decrypt(val, 'utf8'),
   })
 
   const config = convict(schema)
   config.load(data)
-  // config.validate() // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  config.validate()
 
   return config
 }
