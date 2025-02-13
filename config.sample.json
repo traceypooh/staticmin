@@ -1,6 +1,5 @@
 {
   "githubAppID": "your github app id (number)",
   "githubPrivateKey": "-----BEGIN RSA PRIVATE KEY-----YOUR_KEY-----END RSA PRIVATE KEY-----",
-  "rsaPrivateKey":    "-----BEGIN RSA PRIVATE KEY-----YOUR_KEY-----END RSA PRIVATE KEY-----",
-  "port": 80
+  "rsaPrivateKey":    "-----BEGIN RSA PRIVATE KEY-----YOUR_KEY-----END RSA PRIVATE KEY-----"
 }

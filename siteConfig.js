@@ -90,19 +90,12 @@ export default function(data, rsa) {
   convict.addFormat({
     name: 'EncryptedString',
     validate: val => true,
-    coerce: val => {
-      return rsa.decrypt(val, 'utf8')
-    }
+    coerce: val => rsa.decrypt(val, 'utf8'),
   })
 
   const config = convict(schema)
+  config.load(data)
+  // config.validate() // xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
-  try {
-    config.load(data)
-    config.validate()
-
-    return config
-  } catch (e) {
-    throw e
-  }
+  return config
 }
