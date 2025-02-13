@@ -34,18 +34,20 @@ const schema = {
   },
 }
 
-let config
 
-try {
-  config = convict(schema)
-  const cj = JSON.parse(Deno.readTextFileSync('config.json'))
-  config.load(cj)
-  // console.log({ config })
-  config.validate()
+export default () => {
+  let config
+  try {
+    config = convict(schema)
+    const cj = JSON.parse(Deno.readTextFileSync('config.production.json'))
+    config.load(cj)
+    // console.log({ config })
+    config.validate()
 
-  console.log('(*) Local config file loaded')
-} catch (e) {
-  console.error({ e }) // xxx
+    console.log('(*) Local config file loaded')
+  } catch (e) {
+    console.error({ e }) // xxx
+  }
+
+  return config
 }
-
-export default config
