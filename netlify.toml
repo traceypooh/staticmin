@@ -1,0 +1,6 @@
+[build]
+  publish = "public"
+
+[[edge_functions]]
+  path = "/"
+  function = "transformer"
