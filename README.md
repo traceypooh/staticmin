@@ -1,5 +1,7 @@
 # Staticman Netlify serverless edge (deno) port & simplification, forked from [Staticman](https://github.com/eduardoboucas/staticman)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/954d83ed-2a18-4795-860e-76cd02388bcc/deploy-status)](https://app.netlify.com/sites/blogtini/deploys)
+
 ## Changes:
 - ported code from `node` to `deno`
 - upgraded all JS to use ES Modules/`import` (not commonJS/`require`)

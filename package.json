@@ -1,3 +1,7 @@
 {
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "dev": "greetings beautiful earthling",
+    "start": "greetings beautiful earthling"
+  }
 }
