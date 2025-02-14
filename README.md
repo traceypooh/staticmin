@@ -16,6 +16,13 @@ Option 1. Authenticate as a GitHub application
 ## Getting started
 - fork this repo 'staticmin'
 - tie this forked repo into `netlify`
+  - [this link](https://www.netlify.com/blog/add-personalization-to-static-html-with-edge-functions-no-browser-javascript/) shows how to get the `ntl` binary, and hook in your forked repo to `netlify` for deploying, via `ntl login` and `ntl init`, etc.
+  - you'll end up:
+    -  adding a new GitHub 'deploy key' to your blog repo that `ntl` creates for you
+    -  adding a `webhook` to your blog repo that has individual events (allowances):
+     - `Branch or tag deletion`
+     - `Pull requests`
+     - `Pushes`
 - setup a GitHub Application with access to the other GitHub repo with your static site blog
 - copy the GitHub setup info (App ID (number) and GitHub RSA private key) into the forked 'staticmin' repo's `netlify` setup as `netlify` secrets
 - you should have these 3 secrets as environment variables configured in your https://app.netlify.com setup:
