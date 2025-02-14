@@ -13,9 +13,9 @@ export default async (request, context) => {
       sp.get('repository')?.match(/^[a-z0-9_-]+$/i)) {
     // Do a minor origin change, for testing this repo, via `ntl dev -p9999`,
     // against a static blog running on and posting from localhost:8888
-    const origin = (context.url?.origin ?? '').replace(/:9999$/, ':8888')
+    // const origin = (context.url?.origin ?? '').replace(/:9999$/, ':8888')
     const headers = {
-      'Access-Control-Allow-Origin': origin,
+      // 'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     }
