@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "greetings beautiful earthling",
-    "start": "greetings beautiful earthling"
+    "dev": "echo greetings beautiful earthling",
+    "start": "echo greetings beautiful earthling",
+    "run": "echo greetings beautiful earthling"
   }
 }
