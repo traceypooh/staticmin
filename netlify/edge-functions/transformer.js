@@ -17,7 +17,7 @@ export default async (request, context) => {
     const headers = {
       'Access-Control-Allow-Origin': origin,
       'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTION',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     }
 
     if (request.method === 'OPTIONS')
