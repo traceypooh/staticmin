@@ -16,6 +16,8 @@ export default async (request, context) => {
     // const origin = (context.url?.origin ?? '').replace(/:9999$/, ':8888')
     const headers = {
       // 'Access-Control-Allow-Origin': origin,
+      // 'Access-Control-Allow-Origin': url.origin ?? '*',
+      'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
       'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
     }
