@@ -31,7 +31,7 @@ Option 1. Authenticate as a GitHub application
   - `RSA_PRIVATE_KEY`
 
 ## RSA tokens (2)
-To avoid encoding / secret / transport / environment variable issues, simply substitute any [NEWLINE] character in your private key files to [SPACE] characters, and the updated [lib/Staticman.js](lib/Staticman.js) code will massage it properly.
+To avoid encoding / secret / transport / environment variable issues, simply substitute any [NEWLINE] character in your private key files to [SPACE] characters, copy them into your `netlify` admin area `environment variables` (as _secrets_), and the updated [lib/Staticman.js](lib/Staticman.js) code will massage it properly.
 
 ## Helpful links:
 - https://github.com/bashlk/staticman-netlify-function/blob/master/functions/staticman/staticman.js
