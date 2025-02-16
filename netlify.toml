@@ -5,4 +5,4 @@
 
 [build]
   publish = "public"
-  command = "deno2node"
+  command = "./deno2node"
