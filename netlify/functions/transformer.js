@@ -48,7 +48,7 @@ export default async (request, context) => {
       console.error({ err })
     }
 
-    return new Response('sucess', { statusCode: 200, headers })
+    return new Response('success', { statusCode: 200, headers })
   }
 }
 
