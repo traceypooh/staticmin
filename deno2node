@@ -1,22 +1,29 @@
 #!/bin/sh -eux
 
-cp netlify.toml-node netlify.toml
-
-# node_modules is ~60MB
-[ -e node_modules/markdown-table ] || npm i
-
 for FI in $(find lib/ -name '*.js'); do
   # eg: ... from 'https://esm.sh/request-promise@^4.2.2'
   perl -i -pe "s=from 'https://esm.sh/([^@/]+)@[^']+=from '\$1=" $FI
   perl -i -pe "s=from 'https://esm.sh/(\@octokit/[^@/]+)@[^']+=from '\$1=" $FI
 done
 
-# switch from deno edge functions, to node functions
+# node_modules is ~60MB
+[ -e node_modules/markdown-table ] || npm i
+
+
+
 FROM=netlify/edge-functions/transformer.js
 TO=netlify/functions/transformer.js
-mkdir -p $(dirname $TO)
-cp $FROM $TO
-echo >> $TO
-echo 'export const config = { path: "/" }' >> $TO
 
-rm -rfv netlify/edge-functions/
+if [ ! -e $TO ]; then
+  # This part is run in the repo itself from the `deno` tag, to transform required parts.
+  # And then
+  cp netlify.toml-node netlify.toml
+
+  # switch from deno edge functions, to node functions
+  mkdir -p $(dirname $TO)
+  cp $FROM $TO
+  echo >> $TO
+  echo 'export const config = { path: "/" }' >> $TO
+
+  mv netlify/edge-functions/  netlify/.edge-functions/
+fi
