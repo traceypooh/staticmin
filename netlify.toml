@@ -5,7 +5,4 @@
 
 [build]
   publish = "public"
-
-[[edge_functions]]
-  path = "/"
-  function = "transformer"
+  command = "deno2node"
