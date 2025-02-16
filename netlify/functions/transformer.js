@@ -13,7 +13,7 @@ export default async (request, context) => {
   let username = sp.get('username')
   let repository = sp.get('repository')
   // eg: /v3/entry/github/traceypooh/blogtini/main/comments
-  const dirs = url.pathname.match(/\/v3\d+\/entry\/[^/]+\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
+  const dirs = url.pathname.match(/\/v\d+\/entry\/[^/]+\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
   if (dirs)
     [, username, repository, branch] = dirs
 
@@ -59,4 +59,4 @@ export default async (request, context) => {
   return new Response('greetings, earthling', { statusCode: 200 })
 }
 
-export const config = { path: '/' }
+export const config = { path: '/*' }
