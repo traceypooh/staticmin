@@ -26,14 +26,16 @@ Option 1. Authenticate as a GitHub application
      - `Pull requests`
      - `Pushes`
 - setup a GitHub Application with access to the other GitHub repo with your static site blog
-- copy the GitHub setup info (App ID (number) and GitHub RSA private key) into the forked 'staticmin' repo's `netlify` setup as `netlify` secrets
-- you should have these 3 secrets as environment variables configured in your https://app.netlify.com setup:
+- copy the GitHub setup info (App ID (number) and GitHub RSA private key (string)) into the forked 'staticmin' repo's `netlify` setup as `netlify` secrets
+- you should have these 2 secrets as environment variables configured in your https://app.netlify.com setup:
   - `GITHUB_APP_ID`
   - `GITHUB_PRIVATE_KEY`
-  - `RSA_PRIVATE_KEY`
 
-## RSA tokens (2)
-To avoid encoding / secret / transport / environment variable issues, simply substitute any [NEWLINE] character in your private key files to [SPACE] characters, copy them into your `netlify` admin area `environment variables` (as _secrets_), and the updated [lib/Staticman.js](lib/Staticman.js) code will massage it properly.
+## Private Keys
+To avoid encoding / secret / transport / environment variable issues, simply substitute any [NEWLINE] character in your private key string to [SPACE] characters, copy it into your `netlify` admin area `environment variables` (as _secrets_), and the updated [lib/Staticman.js](lib/Staticman.js) code will massage it properly.
+
+To simplify setup, if you needed for some reason to have [encrypted data](https://staticman.net/docs/encryption) in your `staticman.yml` file, we'll use your (RSA) `githubPrivateKey` to encrypt the data (so you don't have to generate another RSA key).
+
 
 ## Helpful links:
 - https://github.com/bashlk/staticman-netlify-function/blob/master/functions/staticman/staticman.js

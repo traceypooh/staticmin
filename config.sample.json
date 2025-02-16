@@ -1,5 +1,4 @@
 {
   "githubAppID": "your github app id (number)",
-  "githubPrivateKey": "-----BEGIN RSA PRIVATE KEY-----YOUR_KEY-----END RSA PRIVATE KEY-----",
-  "rsaPrivateKey":    "-----BEGIN RSA PRIVATE KEY-----YOUR_KEY-----END RSA PRIVATE KEY-----"
+  "githubPrivateKey": "-----BEGIN RSA PRIVATE KEY-----YOUR_KEY-----END RSA PRIVATE KEY-----"
 }
