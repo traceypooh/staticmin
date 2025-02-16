@@ -1,0 +1,11 @@
+[[headers]]
+  for = "/*"
+  [headers.values]
+    access-control-allow-origin = "*"
+
+[build]
+  publish = "public"
+
+[[edge_functions]]
+  path = "/"
+  function = "transformer"

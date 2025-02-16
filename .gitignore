@@ -2,3 +2,5 @@ config.production.json
 deno.lock
 # Local Netlify folder
 .netlify
+node_modules
+package-lock.json

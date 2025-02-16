@@ -1,0 +1,56 @@
+#!/bin/sh -eux
+
+[ -e node_modules/markdown-table ] || npm i
+
+for FI in $(find lib/ -name '*.js'); do
+  # eg: ... from 'https://esm.sh/request-promise@^4.2.2'
+  perl -i -pe "s=from 'https://esm.sh/([^@/]+)@[^']+=from '\$1=" $FI
+  perl -i -pe "s=from 'https://esm.sh/(\@octokit/[^@/]+)@[^']+=from '\$1=" $FI
+done
+
+# switch from deno edge functions, to node functions
+FROM=netlify/edge-functions/transformer.js
+TO=netlify/functions/transformer.js
+mkdir -p $(dirname $TO)
+cp $FROM $TO
+echo >> $TO
+echo 'export const config = { path: "/" }' >> $TO
+
+exit 0
+
+
+
+mkdir -p  x/y
+
+FROM=netlify/edge-functions/transformer.js
+if [ -e $FROM ]; then mv $FROM x/y/transformer.js; fi
+FROM=x/y/transformer.js
+
+rm -rfv build
+
+deno run -A ~/d/esbuild_es5/esbuild.js --minify=false --target=es2020 --platform=node $FROM
+grep transformer_default build/transformer.min.js
+
+FUNC=netlify/functions/transformer.js
+cp build/transformer.min.js  $FUNC
+
+echo '
+
+export default transformer_default
+
+export const config = {
+  path: "/"
+};
+' >> $FUNC
+
+exit 0
+
+
+npm add esbuild
+
+./node_modules/esbuild/bin/esbuild  netlify/edge-functions/transformer.js --bundle --outfile=out.js --platform=node
+
+cat package.json | sed 's/"module"/"commonjs"/' >| p.json
+mv p.json package.json
+
+# node out.js

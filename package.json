@@ -1,8 +1,19 @@
 {
   "type": "module",
-  "scripts": {
-    "dev": "echo greetings beautiful earthling",
-    "start": "echo greetings beautiful earthling",
-    "run": "echo greetings beautiful earthling"
+  "dependencies": {
+    "@octokit/app": "^4.1.0",
+    "@octokit/request": "^5.3.1",
+    "@octokit/rest": "^16.35.0",
+    "convict": "^4.3.0",
+    "js-base64": "^3.7.7",
+    "js-yaml": "^3.10.0",
+    "markdown-table": "^1.0.0",
+    "md5": "^2.1.0",
+    "moment": "^2.18.1",
+    "node-rsa": "^0.4.2",
+    "object-path": "^0.11.1",
+    "request-promise": "^4.2.2",
+    "slug": "^0.9.3",
+    "uuid": "^11.0.5"
   }
 }
