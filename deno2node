@@ -23,7 +23,7 @@ if [ ! -e $TO ]; then
   mkdir -p $(dirname $TO)
   cp $FROM $TO
   echo >> $TO
-  echo 'export const config = { path: "/" }' >> $TO
+  echo "export const config = { path: '/' }" >> $TO
 
   mv netlify/edge-functions/  netlify/.edge-functions/
 fi
