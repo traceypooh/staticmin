@@ -3,6 +3,12 @@
   [headers.values]
     access-control-allow-origin = "*"
 
+[[redirects]]
+  # SPA all pages (as rewrites) to top page
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
 [build]
   publish = "public"
   command = "./deno2node"
