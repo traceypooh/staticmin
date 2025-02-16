@@ -50,6 +50,8 @@ export default async (request, context) => {
 
     return new Response('success', { statusCode: 200, headers })
   }
+
+  return new Response('<h1>greetings, earthling</h1>', { statusCode: 200 })
 }
 
 export const config = { path: '/' }
