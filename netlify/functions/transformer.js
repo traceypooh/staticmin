@@ -5,12 +5,21 @@ const log = console.log.bind(console)
 
 // eslint-disable-next-line consistent-return, no-unused-vars
 export default async (request, context) => {
-  // Look for required query parameters
+  // Look for required path pattern *OR* query parameters
   const url = new URL(request.url)
   const sp = new URLSearchParams(url.search)
-  if ((sp.get('branch') ?? 'main').match(/^[a-z0-9_-]+$/i) &&
-      sp.get('username')?.match(/^[a-z0-9_-]+$/i) &&
-      sp.get('repository')?.match(/^[a-z0-9_-]+$/i)) {
+
+  let branch = sp.get('branch') ?? 'main'
+  let username = sp.get('username')
+  let repository = sp.get('repository')
+  // eg: /v3/entry/github/traceypooh/blogtini/main/comments
+  const dirs = url.pathname.match(/\/v3\d+\/entry\/[^/]+\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
+  if (dirs)
+    [, username, repository, branch] = dirs
+
+  if (branch?.match(/^[a-z0-9_-]+$/i) &&
+      username?.match(/^[a-z0-9_-]+$/i) &&
+      repository?.match(/^[a-z0-9_-]+$/i)) {
     // Do a minor origin change, for testing this repo, via `ntl dev -p9999`,
     // against a static blog running on and posting from localhost:8888
     // const cors_origin = (url.origin ?? '*').replace(/:9999$/, ':8888')
@@ -30,11 +39,7 @@ export default async (request, context) => {
     const options = body.options ?? {}
     // log({ body, options }, body.fields)
 
-    const staticman = await new StaticMan({
-      branch: sp.get('branch') ?? 'main',
-      username: sp.get('username'),
-      repository: sp.get('repository'),
-    })
+    const staticman = await new StaticMan({ branch, username, repository })
 
     if (request.headers.get('client-ip'))
       staticman.setIp(request.headers.get('client-ip'))
