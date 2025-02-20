@@ -18,7 +18,7 @@ export default async (request, context) => {
   }
 
   // eg: /v3/entry/github/traceypooh/blogtini/main/comments
-  const dirs = url.pathname.match(/\/v\d+\/entry\/github\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
+  const dirs = url.pathname.match(/\/v3\/entry\/github\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
   if (!dirs) {
     headers.Location = '/404'
     return new Response(null, { statusCode: 302, headers })
