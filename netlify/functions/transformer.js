@@ -53,4 +53,4 @@ export default async (request, context) => {
   return new Response('success', { statusCode: 200, headers })
 }
 
-export const config = { path: '/*' }
+export const config = { path: '/v3/entry/github/*' }
