@@ -14,14 +14,14 @@ export default async (request, context) => {
   // eg: /v3/entry/github/traceypooh/blogtini/main/comments
   const dirs = url.pathname.match(/\/v\d+\/entry\/github\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
   if (!dirs)
-    return new Response('page not found', { statusCode: 404 })
+    return new Response(null, { statusCode: 404 })
 
   const [, username, repository, branch] = dirs
 
   if (!branch?.match(/^[a-z0-9_-]+$/i) ||
       !username?.match(/^[a-z0-9_-]+$/i) ||
       !repository?.match(/^[a-z0-9_-]+$/i)) {
-    return new Response('page not found', { statusCode: 404 })
+    return new Response(null, { statusCode: 404 })
   }
 
   const headers = {
