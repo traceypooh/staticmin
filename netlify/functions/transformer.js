@@ -9,54 +9,56 @@ export default async (request, context) => {
   const url = new URL(request.url)
   const sp = new URLSearchParams(url.search)
 
-  let branch = sp.get('branch') ?? 'main'
-  let username = sp.get('username')
-  let repository = sp.get('repository')
+  if (url.pathname === '/')
+    return new Response('greetings, earthling', { statusCode: 200 })
+
   // eg: /v3/entry/github/traceypooh/blogtini/main/comments
   const dirs = url.pathname.match(/\/v\d+\/entry\/[^/]+\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
-  if (dirs)
-    [, username, repository, branch] = dirs
+  if (!dirs)
+    return new Response('page not found', { statusCode: 404 })
 
-  if (branch?.match(/^[a-z0-9_-]+$/i) &&
-      username?.match(/^[a-z0-9_-]+$/i) &&
-      repository?.match(/^[a-z0-9_-]+$/i)) {
-    // Do a minor origin change, for testing this repo, via `ntl dev -p9999`,
-    // against a static blog running on and posting from localhost:8888
-    // const cors_origin = (url.origin ?? '*').replace(/:9999$/, ':8888')
+  const [, username, repository, branch] = dirs
 
-    const headers = {
-      // 'Access-Control-Allow-Origin': origin,
-      'Access-Control-Allow-Origin': '*', // request.method === 'OPTIONS' ? '*' : cors_origin,
-      'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
-      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-    }
-
-    if (request.method === 'OPTIONS')
-      return new Response('', { statusCode: 200, headers })
-
-    // log({ request, context })
-    const body = await request.json()
-    const options = body.options ?? {}
-    // log({ body, options }, body.fields)
-
-    const staticman = await new StaticMan({ branch, username, repository })
-
-    if (request.headers.get('client-ip'))
-      staticman.setIp(request.headers.get('client-ip'))
-    staticman.setUserAgent(request.headers.get('user-agent'))
-
-    try {
-      const processed = await staticman.processEntry(body.fields, options)
-      log({ processed })
-    } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error({ err })
-    }
-
-    return new Response('success', { statusCode: 200, headers })
+  if (!branch?.match(/^[a-z0-9_-]+$/i) ||
+      !username?.match(/^[a-z0-9_-]+$/i) ||
+      !repository?.match(/^[a-z0-9_-]+$/i)) {
+    return new Response('page not found', { statusCode: 404 })
   }
 
-  return new Response('greetings, earthling', { statusCode: 200 })
+  // Do a minor origin change, for testing this repo, via `ntl dev -p9999`,
+  // against a static blog running on and posting from localhost:8888
+  // const cors_origin = (url.origin ?? '*').replace(/:9999$/, ':8888')
+
+  const headers = {
+    // 'Access-Control-Allow-Origin': origin,
+    'Access-Control-Allow-Origin': '*', // request.method === 'OPTIONS' ? '*' : cors_origin,
+    'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  }
+
+  if (request.method === 'OPTIONS')
+    return new Response('', { statusCode: 200, headers })
+
+  // log({ request, context })
+  const body = await request.json()
+  const options = body.options ?? {}
+  // log({ body, options }, body.fields)
+
+  const staticman = await new StaticMan({ branch, username, repository })
+
+  if (request.headers.get('client-ip'))
+    staticman.setIp(request.headers.get('client-ip'))
+  staticman.setUserAgent(request.headers.get('user-agent'))
+
+  try {
+    const processed = await staticman.processEntry(body.fields, options)
+    log({ processed })
+  } catch (err) {
+    // eslint-disable-next-line no-console
+    console.error({ err })
+  }
+
+  return new Response('success', { statusCode: 200, headers })
 }
 
 export const config = { path: '/*' }

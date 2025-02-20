@@ -1,19 +1,15 @@
-# Staticman Netlify serverless edge (deno) port & simplification, forked from [Staticman](https://github.com/eduardoboucas/staticman)
+# Staticman Netlify serverless functions port & simplification, forked from [Staticman](https://github.com/eduardoboucas/staticman)
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/954d83ed-2a18-4795-860e-76cd02388bcc/deploy-status)](https://app.netlify.com/sites/blogtini/deploys)
 
 ## Changes:
-- ported code from `node` to `deno`
 - upgraded all JS to use ES Modules/`import` (not commonJS/`require`)
 - dropped gitlab option (to simplify)
-- only allow the safest/newest 'GitHub Application' option from https://staticman.net/docs/getting-started.html:
-```txt
-If using GitHub to host the static site repo:
-Option 1. Authenticate as a GitHub application
-```
+- only allow the safest/newest 'Authenticate as a GitHub application' option from https://staticman.net/docs/getting-started.html
 - setup to run on `netlify`
 - pared down config, JS files
 - did a bit of `eslint` cleaning, removed some side-effects, etc.
+- ported code from `node` to `deno` (in alternate "serverless edge" branch named `deno`)
 
 ## Getting started
 - fork this repo 'staticmin'
