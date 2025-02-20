@@ -25,13 +25,8 @@ export default async (request, context) => {
     return new Response('page not found', { statusCode: 404 })
   }
 
-  // Do a minor origin change, for testing this repo, via `ntl dev -p9999`,
-  // against a static blog running on and posting from localhost:8888
-  // const cors_origin = (url.origin ?? '*').replace(/:9999$/, ':8888')
-
   const headers = {
-    // 'Access-Control-Allow-Origin': origin,
-    'Access-Control-Allow-Origin': '*', // request.method === 'OPTIONS' ? '*' : cors_origin,
+    'Access-Control-Allow-Origin': '*',
     'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
     'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   }
