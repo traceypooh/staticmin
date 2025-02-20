@@ -8,22 +8,3 @@ done
 
 # node_modules is ~60MB
 [ -e node_modules/markdown-table ] || npm i
-
-
-
-FROM=netlify/edge-functions/transformer.js
-TO=netlify/functions/transformer.js
-
-if [ ! -e $TO ]; then
-  # This part is run in the repo itself from the `deno` tag, to transform required parts.
-  # And then
-  cp netlify.toml-node netlify.toml
-
-  # switch from deno edge functions, to node functions
-  mkdir -p $(dirname $TO)
-  cp $FROM $TO
-  echo >> $TO
-  echo "export const config = { path: '/' }" >> $TO
-
-  mv netlify/edge-functions/  netlify/.edge-functions/
-fi

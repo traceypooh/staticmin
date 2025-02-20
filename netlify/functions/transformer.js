@@ -5,15 +5,14 @@ const log = console.log.bind(console)
 
 // eslint-disable-next-line consistent-return, no-unused-vars
 export default async (request, context) => {
-  // Look for required path pattern *OR* query parameters
+  // Look for required path pattern
   const url = new URL(request.url)
-  const sp = new URLSearchParams(url.search)
 
   if (url.pathname === '/')
     return new Response('greetings, earthling', { statusCode: 200 })
 
   // eg: /v3/entry/github/traceypooh/blogtini/main/comments
-  const dirs = url.pathname.match(/\/v\d+\/entry\/[^/]+\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
+  const dirs = url.pathname.match(/\/v\d+\/entry\/github\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
   if (!dirs)
     return new Response('page not found', { statusCode: 404 })
 
@@ -39,13 +38,8 @@ export default async (request, context) => {
   const options = body.options ?? {}
   // log({ body, options }, body.fields)
 
-  const staticman = await new StaticMan({ branch, username, repository })
-
-  if (request.headers.get('client-ip'))
-    staticman.setIp(request.headers.get('client-ip'))
-  staticman.setUserAgent(request.headers.get('user-agent'))
-
   try {
+    const staticman = await new StaticMan({ branch, username, repository })
     const processed = await staticman.processEntry(body.fields, options)
     log({ processed })
   } catch (err) {

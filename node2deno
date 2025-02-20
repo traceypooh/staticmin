@@ -1,0 +1,6 @@
+#!/bin/sh -eux
+
+# switch from node functions to deno edge functions
+cp  netlify.toml-deno  netlify.toml
+
+mv  netlify/functions  netlify/edge-functions
