@@ -11,23 +11,26 @@ export default async (request, context) => {
   if (url.pathname === '/')
     return new Response('greetings, earthling', { statusCode: 200 })
 
+  const headers = {
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
+    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  }
+
   // eg: /v3/entry/github/traceypooh/blogtini/main/comments
   const dirs = url.pathname.match(/\/v\d+\/entry\/github\/([^/]+)\/([^/]+)\/([^/]+)\/comments/)
-  if (!dirs)
-    return new Response(null, { statusCode: 404 })
+  if (!dirs) {
+    headers.Location = '/404'
+    return new Response(null, { statusCode: 302, headers })
+  }
 
   const [, username, repository, branch] = dirs
 
   if (!branch?.match(/^[a-z0-9_-]+$/i) ||
       !username?.match(/^[a-z0-9_-]+$/i) ||
       !repository?.match(/^[a-z0-9_-]+$/i)) {
-    return new Response(null, { statusCode: 404 })
-  }
-
-  const headers = {
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': 'Content-Type, X-Requested-With',
-    'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+    headers.Location = '/404'
+    return new Response(null, { statusCode: 302, headers })
   }
 
   if (request.method === 'OPTIONS')
