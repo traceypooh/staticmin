@@ -1,6 +1,10 @@
 # Staticman Netlify serverless functions port & simplification, forked from [Staticman](https://github.com/eduardoboucas/staticman)
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/954d83ed-2a18-4795-860e-76cd02388bcc/deploy-status)](https://app.netlify.com/sites/blogtini/deploys)
+
+[![Deploy with Netlify button](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/traceypooh/staticmin)
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/ff727fd1-d4a0-44ab-b927-c16e4c06ad4e/deploy-status)](https://app.netlify.com/sites/blogtini/deploys)
+
 
 ## Changes:
 - upgraded all JS to use ES Modules/`import` (not commonJS/`require`)
