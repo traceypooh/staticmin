@@ -1,6 +1,31 @@
-#!/bin/sh -eux
+#!/bin/sh -eu
+
+# Not used, but if netlify edge functions (which use deno) ever allow for up to (say) 2-5 seconds
+# to run, we could switch this repo
+#   from: [node / netlify functions]
+#     to: [deno / netlify edge functions]
+
+# Put the package versions from package.json back into lib/*.js files
+# and prepend them to https://esm.sh/ urls
+for kv in $(cat package.json | jq .dependencies | tr -d ', "'|grep -F :); do
+  k=$(echo $kv |cut -d: -f1) # eg: markdown-table
+  v=$(echo $kv |cut -d: -f2) # eg: ~1.0.0
+  kmatcher=$(echo $k | tr @ .)
+  ksafe=$(echo $k |tr @ '~')
+
+  perl -i -pe "s=from '$kmatcher'=from 'https://esm.sh/$ksafe\@$v'=" lib/*.js
+  perl -i -pe 's=/~=/@=' lib/*.js
+done
+
 
 # switch from node functions to deno edge functions
-cp  netlify.toml-deno  netlify.toml
+
+echo '
+[[edge_functions]]
+  path = "/v3/entry/github/"
+  function = "transformer"
+' >> netlify.toml
 
 mv  netlify/functions  netlify/edge-functions
+
+rm -rf  node_modules  package.json

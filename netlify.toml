@@ -17,4 +17,5 @@
 
 [build]
   publish = "public"
-  command = "./deno2node"
+  command = "sh -c 'if [ -e package.json ]; then npm i; fi'"
+  # node_modules is ~60MB

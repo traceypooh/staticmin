@@ -5,7 +5,7 @@
     "@octokit/request": "^5.3.1",
     "@octokit/rest": "^16.35.0",
     "convict": "^4.3.0",
-    "js-base64": "^3.7.7",
+    "js-base64": "3.7.7",
     "js-yaml": "^3.10.0",
     "markdown-table": "^1.0.0",
     "md5": "^2.1.0",
