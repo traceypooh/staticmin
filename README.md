@@ -37,6 +37,37 @@ To avoid encoding / secret / transport / environment variable issues, simply sub
 To simplify setup, if you needed for some reason to have [encrypted data](https://staticman.net/docs/encryption) in your `staticman.yml` file, we'll use your (RSA) `githubPrivateKey` to encrypt the data (so you don't have to generate another RSA key).
 
 
+## Comments file
+Every comment goes into one `comments.json` file at the top of your site repo -- so your site needs no build
+step to show them.  Each comment is a pull request adding a few lines to it, at a random one of 972 "slots", so
+two pending comments almost never conflict (~1 in 972), even w/ GitHub's web "Merge" button.
+It's deliberately *not* valid JSON (a speed bump for bots) -- see [lib/comments_file.js](lib/comments_file.js)
+for the format & the 1-line way to read it.  (So `staticman.yml`'s `format`, `path`, `filename` aren't used.)
+
+Older comments (one file each, in `comments/<post>/`): convert them once w/
+[bin/convert-comments.js](bin/convert-comments.js) (its top comment has how).
+
+
+## Avatars
+A comment's `email` is never stored -- not even as an md5 (which anyone can match against a guessed email).
+Instead:
+- the comment gets an `identity`: a key that's the same for each commenter, but reveals nothing about them
+  (an HMAC of the email's md5, w/ your `githubPrivateKey` as the secret -- so, again, no extra secret)
+- if they have a [Gravatar](https://gravatar.com), it's saved in the same pull request as `avatars/<identity>.<ext>`
+  (120px), and the comment gets its `"type"` (eg: `"png"`) -- so site visitors never load anything from
+  gravatar.com, and no build step is needed to show it.  Unchanged images aren't re-committed.
+  (Just the type, not the whole path: so the comments file doesn't spell out "this name => this picture".)
+
+Nothing to set up. Optionally, in your site's `staticman.yml`:
+```yaml
+  avatars: "img/avatars"   # a different directory (blogtini & its Hugo theme look in `avatars/` though)
+  avatars: ""              # no images in your repo (still no email; everyone gets an identicon)
+```
+
+NOTE: if you ever replace your GitHub App private key, *new* comments get new identities -- so a commenter's
+older comments keep their avatar as it was, and stop getting their Gravatar updates.
+
+
 ## Helpful links:
 - https://github.com/bashlk/staticman-netlify-function/blob/master/functions/staticman/staticman.js
 - https://www.netlify.com/blog/add-personalization-to-static-html-with-edge-functions-no-browser-javascript/
